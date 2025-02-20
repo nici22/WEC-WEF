@@ -1,0 +1,46 @@
+<?xml version="1.0"?>
+<instrumentationManifest xsi:schemaLocation="http://schemas.microsoft.com/win/2004/08/events eventman.xsd" xmlns="http://schemas.microsoft.com/win/2004/08/events" xmlns:win="http://manifests.microsoft.com/win/2004/08/windows/events" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:trace="http://schemas.microsoft.com/win/2004/08/events/trace">
+	<instrumentation>
+		<events>
+			<provider name="WEF-Events" guid="{CB3EB4AA-FEDD-41C4-A7BB-E173045E4DC7}" symbol="WEF_Events" resourceFileName="C:\Windows\System32\WEF_Events.dll" messageFileName="C:\Windows\System32\WEF_Events.dll">
+				<events>
+					<event symbol="WEF_Event" value="6969" version="0" channel="WEF-Security" template="WEF-Template" keywords="win:AuditSuccess win:AuditFailure " message="$(string.WEF-Events.event.6969.message)"></event>
+				</events>
+				<channels>
+					<channel name="WEF-Security" chid="WEF-Security" symbol="WEF_Security" type="Operational" enabled="true" message="$(string.WEF-Events.channel.WEF_Security.message)"></channel>
+					<channel name="WEF-System" chid="WEF-System" symbol="WEF_System" type="Operational" enabled="true" message="$(string.WEF-Events.channel.WEF_System.message)"></channel>
+					<channel name="WEF-PowerShell" chid="WEF-PowerShell" symbol="WEF_PowerShell" type="Operational" enabled="true" message="$(string.WEF-Events.channel.WEF_PowerShell.message)"></channel>
+					<channel name="WEF-Sysmon" chid="WEF-Sysmon" symbol="WEF_Sysmon" type="Operational" enabled="true" message="$(string.WEF-Events.channel.WEF_Sysmon.message)"></channel>
+					<channel name="WEF-Defender" chid="WEF-Defender" symbol="WEF_Defender" type="Operational" enabled="true" message="$(string.WEF-Events.channel.WEF_Defender.message)"></channel>
+					<channel name="WEF-Application" chid="WEF-Application" symbol="WEF_Application" type="Operational" enabled="true" message="$(string.WEF-Events.channel.WEF_Application.message)"></channel>
+					<channel name="WEF-Other1" chid="WEF-Other1" symbol="WEF_Other1" type="Operational" enabled="true" message="$(string.WEF-Events.channel.WEF_Other1.message)"></channel>
+					<channel name="WEF-Other2" chid="WEF-Other2" symbol="WEF_Other2" type="Operational" enabled="true" message="$(string.WEF-Events.channel.WEF_Other2.message)"></channel>
+				</channels>
+				<keywords></keywords>
+				<templates>
+					<template tid="WEF-Template">
+						<data name="Unicode" inType="win:UnicodeString" outType="xs:string"></data>
+						<data name="UInt32" inType="win:UInt32" outType="xs:unsignedInt"></data>
+					</template>
+				</templates>
+			</provider>
+		</events>
+	</instrumentation>
+	<localization>
+		<resources culture="en-US">
+			<stringTable>
+				<string id="keyword.AuditSuccess" value="Audit Success"></string>
+				<string id="keyword.AuditFailure" value="Audit Failure"></string>
+				<string id="WEF-Events.event.6969.message" value="$(string.WEF-Events.event.6969.message)"></string>
+				<string id="WEF-Events.channel.WEF_System.message" value="DC System Logs"></string>
+				<string id="WEF-Events.channel.WEF_Sysmon.message" value="DC Sysmon Logs"></string>
+				<string id="WEF-Events.channel.WEF_Security.message" value="DC Security Logs"></string>
+				<string id="WEF-Events.channel.WEF_PowerShell.message" value="DC PowerShell Logs"></string>
+				<string id="WEF-Events.channel.WEF_Defender.message" value="DC Defender Logs"></string>
+				<string id="WEF-Events.channel.WEF_Application.message" value="DC Application Logs"></string>
+				<string id="WEF-Events.channel.WEF_Other1.message" value="DC Other1 Logs"></string>
+				<string id="WEF-Events.channel.WEF_Other2.message" value="DC Other2 Logs"></string>
+			</stringTable>
+		</resources>
+	</localization>
+</instrumentationManifest>
