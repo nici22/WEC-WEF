@@ -1,4 +1,4 @@
-# Windows Event Forwarding (WEF) & Windows Event Collector (WEC) Configuration Guide
+# WEF & WEC Configuration Guide
 
 ## Overview
 Windows Event Forwarding (WEF) and Windows Event Collector (WEC) allow organizations to centralize Windows event logs for better security monitoring, incident response, and compliance. This guide provides a step-by-step setup to configure WEF and WEC properly.
@@ -8,14 +8,9 @@ Windows Event Forwarding (WEF) and Windows Event Collector (WEC) allow organizat
 - **Windows Server** (for WEC)
 - **Windows Clients** (for WEF)
 - **Active Directory** (for domain-based deployment)
-- **Group Policy Management** (to configure forwarding policies)
 - **Domain Admin privileges** (recommended for setup)
 
-### Network & Security Configurations
-- Enable **WinRM (Windows Remote Management)** on all endpoints
-- Ensure firewall rules allow event log forwarding
-- WEC server must be trusted by the domain
-<br><br><br>
+<br><br>
 ## On Windows Server (WEC Machine)
 
 1. Enable the service “Windows Event Collector”
@@ -49,17 +44,20 @@ Windows Event Forwarding (WEF) and Windows Event Collector (WEC) allow organizat
         
         `wevtutil im C:\Windows\System32\WEF_Events.man` 
         
-    
+        You can find these files in the **Config_Files** folder.
         ![image.png](Images/image%202.png)
     
-        After running this command the following channels must be created under the `WEF-Events` in the Event Viewer. I have chosen this channels for test purposes and also tried to choose the most used Event types. If you want to customize it, you can refer [here](https://github.com/jebidiah-anthony/Windows-Event-Forwarder/blob/master/Creating%20Custom%20Logs.md). 
+        After running this command, the following channels must be created under **WEF-Events** in the Event Viewer. I have chosen these channels for testing purposes and have also tried to select the most commonly used event types. If you want to customize them, you can refer to this [guide](https://github.com/jebidiah-anthony/Windows-Event-Forwarder/blob/master/Creating%20Custom%20Logs.md). 
     
         ![image.png](Images/image%203.png)
     
 
 5. Apply GPO to config Agents
-    1. Enable WINRM on Agents
-        1. On the right side, locate and modify the **Allow remote server management through WinRM** policy setting.
+    1. Enable WINRM on Agents 
+       1. Firstly, create new GPO and link to the OU. And then right click and edit the GPO. 
+            ![alt text](image30.png)
+        1.  Expand the **Computer Configuration > Policies > Administrative Templates > Windows Components > Windows Remote Management (WinRM) > WinRM Service** 
+         <br>   On the right side, locate and edit the **Allow remote server management through WinRM** policy setting. 
             
             ![image.png](Images/image%204.png)
             
@@ -67,7 +65,7 @@ Windows Event Forwarding (WEF) and Windows Event Collector (WEC) allow organizat
             
             ![image.png](Images/image%205.png)
             
-        2. The next policy that needs to be configured is the one responsible for enabling and starting the WinRM service. Expand **Computer Configuration >  Preferences > Control Panel Settings > Services**. Right-click the **Services** section and choose **New > Service**.
+        2. The next policy that needs to be configured is the one responsible for enabling and starting the WinRM service. Expand **Computer Configuration >  Preferences > Control Panel Settings > Services**. Right-click the **Services** section and choose **New > Service**. Change the StartUp type to "Automatic (Delayed Start)" and Service action to the "Start Service"
             
             ![image.png](Images/image%206.png)
             
@@ -100,7 +98,7 @@ Windows Event Forwarding (WEF) and Windows Event Collector (WEC) allow organizat
         
             ![image.png](Images/image%2013.png)
             
-    2.  Add `Network Service` account to the Agents’ Local Group
+    3.  Add `Network Service` account to the Agents’ Local Group
         
         ![image.png](Images/image%2014.png)
         
@@ -114,7 +112,7 @@ Windows Event Forwarding (WEF) and Windows Event Collector (WEC) allow organizat
         
         ![image.png](Images/image%2017.png)
         
-    3. Then run `gpupdate.exe` on PowerShell as Administrator or reboot the clients to take effect.  
+    4. Then run `gpupdate.exe` on PowerShell as Administrator or reboot the clients to take effect.  <br><br>
     
 
 1. Configure a Subscription
@@ -180,24 +178,25 @@ Windows Event Forwarding (WEF) and Windows Event Collector (WEC) allow organizat
                 
                 ![image.png](Images/image%2025.png)
                 
-                You can add desired OUs here. And no need to specify the privileged account credentials in this solution.  
+                You can add the desired OUs here. And no need to specify the privileged account credentials in this solution.  
                 
             
         <br><br>
     After creating Subscription you can check the connected Agents status by checking `Runtime Status`
     <br><br>![image.png](Images/image%2026.png)
 
-        After a while all logs will start to come your specified destinations.
+        After a while all logs will start coming to your specified destinations.
         ![alt text](Images/image28.png) <br><br><br>
 
+## References
+- [Microsoft Docs: Windows Event Collection](https://learn.microsoft.com/en-us/advanced-threat-analytics/configure-event-collection)
+- [CREATING CUSTOM LOGS FOR WINDOWS EVENT FORWARDER](https://github.com/jebidiah-anthony/Windows-Event-Forwarder/blob/master/Creating%20Custom%20Logs.md)
+- [How to enable WinRM (HTTP) via Group Policy](https://www.vkernel.ro/blog/how-to-enable-winrm-http-via-group-policy)
 
-    ## References
-- [Microsoft Docs: Windows Event Forwarding](https://learn.microsoft.com/en-us/windows-server/)
-- [Elastic Winlogbeat Guide](https://www.elastic.co/guide/en/beats/winlogbeat/index.html)
-- [Splunk Universal Forwarder](https://docs.splunk.com/) <br><br><br>
+<br><br>
+    This guide was created to help security professionals, SOC teams, and system administrators streamline Windows event log collection. By following these steps, you can enhance visibility, strengthen security monitoring, and optimize incident response.
 
-
-
+<br>
 
 
 🚀 **Stay Secure & Keep Monitoring!** 🔍🔐
