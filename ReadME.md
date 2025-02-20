@@ -120,7 +120,7 @@ Windows Event Forwarding (WEF) and Windows Event Collector (WEC) allow organizat
         - In the Event Viewer, Click the `Subscriptions` (on the bottom)
         - Click the `Create Subscription`
   
-            ![alt text](Images\image27.png)
+            ![alt text](Images/image27.png)
 
         - Choose relevant Destination Log
             
