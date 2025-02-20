@@ -55,7 +55,7 @@ Windows Event Forwarding (WEF) and Windows Event Collector (WEC) allow organizat
 5. Apply GPO to config Agents
     1. Enable WINRM on Agents 
        1. Firstly, create new GPO and link to the OU. And then right click and edit the GPO. 
-            ![alt text](image30.png)
+            ![alt text](Images/image30.png)!
         1.  Expand the **Computer Configuration > Policies > Administrative Templates > Windows Components > Windows Remote Management (WinRM) > WinRM Service** 
          <br>   On the right side, locate and edit the **Allow remote server management through WinRM** policy setting. 
             
